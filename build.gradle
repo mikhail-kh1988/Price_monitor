@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.pricemonitor'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+def springCoreVersion = "5.3.7"
+def jacksonVersion = "2.12.2"
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    // Hibernate
+    implementation 'org.hibernate:hibernate-core:5.5.5.Final'
+    implementation 'org.hibernate:hibernate-entitymanager:5.5.0.Beta1'
+    // Driver for data base
+    implementation 'org.postgresql:postgresql:42.2.23'
+    // Spring Context (Spring Core)
+    implementation 'org.springframework:spring-context:'+springCoreVersion
+    implementation 'org.springframework:spring-core:'+springCoreVersion
+    implementation 'org.springframework:spring-beans:'+springCoreVersion
+    implementation 'org.springframework:spring-orm:'+springCoreVersion
+    // Java EE
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    // Spring MVC
+    implementation 'org.springframework:spring-webmvc:'+springCoreVersion
+    implementation 'org.springframework:spring-web:'+springCoreVersion
+    // Jackson for JSON format
+    implementation 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:'+jacksonVersion
+}
+
+
+test {
+    useJUnitPlatform()
+}
