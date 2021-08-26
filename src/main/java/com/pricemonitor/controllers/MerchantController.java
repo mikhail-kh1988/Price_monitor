@@ -1,5 +1,7 @@
 package com.pricemonitor.controllers;
 
+import com.pricemonitor.dto.CategoryDTO;
+import com.pricemonitor.dto.CategoryForMerchantDTO;
 import com.pricemonitor.dto.MerchantDTO;
 import com.pricemonitor.dto.ProductForMerchantDTO;
 import com.pricemonitor.entity.Category;
@@ -71,4 +73,15 @@ public class MerchantController {
         return "success!";
     }
 
+    @PostMapping(path = "/addCategory")
+    public String addNewCategory(@RequestBody CategoryForMerchantDTO categoryDTO){
+        Category category = new Category();
+        category.setName(categoryDTO.getCategoryName());
+        category.setDescription(categoryDTO.getCategoryDescription());
+
+        Merchant merchant = merchantService.findMerchantById(categoryDTO.getMerchantID());
+
+        merchantService.addNewCategory(merchant, category);
+        return "success!";
+    }
 }

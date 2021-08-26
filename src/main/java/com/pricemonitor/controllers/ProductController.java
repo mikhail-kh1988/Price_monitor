@@ -59,6 +59,7 @@ public class ProductController {
     public String deleteProduct(@RequestBody ProductDTO productDTO){
         Product product = productService.findProductById(productDTO.getProductID());
         productService.deleteProduct(product);
+        return "success";
 
     }
 

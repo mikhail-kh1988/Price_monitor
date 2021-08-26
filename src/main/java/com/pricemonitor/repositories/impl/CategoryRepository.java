@@ -21,6 +21,7 @@ public class CategoryRepository extends AbstractRepository implements ICategoryR
         this.create(category);
     }
 
+    @Transactional
     @Override
     public Category findCategoryById(int id) {
         return (Category) this.findOneById(id);

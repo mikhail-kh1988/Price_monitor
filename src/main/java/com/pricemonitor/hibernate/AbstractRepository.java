@@ -47,7 +47,7 @@ public class AbstractRepository<T extends Serializable> implements CRUDRepositor
 
     @Override
     public void delete(Serializable entity) {
-        entityManager.remove(entity);
+        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
     }
 
     public Class<T> getClazz() {

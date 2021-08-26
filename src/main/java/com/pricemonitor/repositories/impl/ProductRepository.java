@@ -20,8 +20,8 @@ public class ProductRepository extends AbstractRepository implements IProductRep
         this.setClazz(Product.class);
     }
 
-    @Override
     @Transactional
+    @Override
     public void createProduct(Product product) {
         this.create(product);
 
@@ -61,6 +61,7 @@ public class ProductRepository extends AbstractRepository implements IProductRep
         return this.findAll();
     }
 
+    @Transactional
     @Override
     public void removeProduct(Product product) {
         this.delete(product);

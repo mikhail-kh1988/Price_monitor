@@ -23,8 +23,8 @@ public class Product implements Serializable {
     @JoinColumn(name = "price_id", referencedColumnName = "id")
     private Price price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     @Column(name = "boxing")
