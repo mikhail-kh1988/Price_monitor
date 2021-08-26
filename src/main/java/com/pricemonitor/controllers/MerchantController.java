@@ -1,9 +1,6 @@
 package com.pricemonitor.controllers;
 
-import com.pricemonitor.dto.CategoryDTO;
-import com.pricemonitor.dto.CategoryForMerchantDTO;
-import com.pricemonitor.dto.MerchantDTO;
-import com.pricemonitor.dto.ProductForMerchantDTO;
+import com.pricemonitor.dto.*;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.entity.Price;
@@ -32,6 +29,15 @@ public class MerchantController {
     public String getAllMerchant(){
         JSONConverter converter = new JSONConverter(merchantService.getAllMerchant());
         return converter.getJSON();
+    }
+
+    @PostMapping(path = "/addMerchant")
+    public String crateNewMerchant(@RequestBody NewMerchantDTO dto){
+        Merchant merchant = new Merchant();
+        merchant.setName(dto.getMerchantName());
+        merchant.setAddress(dto.getMerchantAddress());
+        merchantService.createNewMerchant(merchant);
+        return "success!";
     }
 
     @PostMapping(path = "/productsByMerchant")

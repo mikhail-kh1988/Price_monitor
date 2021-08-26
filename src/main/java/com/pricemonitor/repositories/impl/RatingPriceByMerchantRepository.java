@@ -7,9 +7,11 @@ import com.pricemonitor.hibernate.AbstractRepository;
 import com.pricemonitor.repositories.IRatingPriceByMerchantRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -25,9 +27,7 @@ public class RatingPriceByMerchantRepository extends AbstractRepository implemen
 
     @Override
     public void createRatingPrice(RatingPriceByMerchant ratingPriceByMerchant) {
-        this.getEntityManager().getTransaction().begin();
         this.create(ratingPriceByMerchant);
-        this.getEntityManager().getTransaction().commit();
     }
 
     @Override
@@ -35,6 +35,7 @@ public class RatingPriceByMerchantRepository extends AbstractRepository implemen
         return this.findAll();
     }
 
+    @Transient
     @Override
     public List<RatingPriceByMerchant> findRatingBetweenMerchant(Merchant merchant1, Merchant merchant2) {
         CriteriaBuilder criteriaBuilder = this.getEntityManager().getEntityManagerFactory().getCriteriaBuilder();
