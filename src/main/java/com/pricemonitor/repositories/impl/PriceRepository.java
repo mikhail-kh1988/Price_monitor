@@ -5,17 +5,18 @@ import com.pricemonitor.hibernate.AbstractRepository;
 import com.pricemonitor.repositories.IPriceRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Repository
 public class PriceRepository extends AbstractRepository implements IPriceRepository {
     public PriceRepository() {
         this.setClazz(Price.class);
     }
 
+    @Transactional
     @Override
     public void createPrice(Price price) {
-        this.getEntityManager().getTransaction().begin();
         this.create(price);
-        this.getEntityManager().getTransaction().commit();
 
     }
 

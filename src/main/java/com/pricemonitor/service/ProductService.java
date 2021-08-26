@@ -15,26 +15,17 @@ public class ProductService {
     private IProductRepository productRepository;
 
     @Autowired
-    private IDynamicPriceRepository dynamicPriceRepository;
+    private DynamicPriceService dynamicPriceService;
 
     public void createProduct(Product product){
         productRepository.createProduct(product);
-
-        DynamicPrice dynamicPrice = new DynamicPrice();
-        dynamicPrice.setPrice(product.getPrice());
-        dynamicPrice.setProduct(product);
-        dynamicPrice.setCreateDate(Calendar.getInstance());
-        dynamicPriceRepository.createDynamicPrice(dynamicPrice);
+        dynamicPriceService.createDynamicPrice(product);
     }
 
     public void updateProduct(Product product){
         Product current = productRepository.findProductById(product.getId());
         if (current.getPrice().getTotal() != product.getPrice().getTotal()) {
-            DynamicPrice dynamicPrice = new DynamicPrice();
-            dynamicPrice.setPrice(product.getPrice());
-            dynamicPrice.setProduct(product);
-            dynamicPrice.setCreateDate(Calendar.getInstance());
-            dynamicPriceRepository.createDynamicPrice(dynamicPrice);
+            dynamicPriceService.createDynamicPrice(product);
         }
         productRepository.updateProduct(product);
     }

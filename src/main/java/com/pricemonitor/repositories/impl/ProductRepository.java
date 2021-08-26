@@ -2,7 +2,6 @@ package com.pricemonitor.repositories.impl;
 
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Product;
-import com.pricemonitor.entity.User;
 import com.pricemonitor.hibernate.AbstractRepository;
 import com.pricemonitor.repositories.IProductRepository;
 import org.springframework.stereotype.Repository;
