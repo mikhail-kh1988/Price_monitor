@@ -7,8 +7,15 @@ import com.pricemonitor.entity.Product;
 import com.pricemonitor.service.CategoryService;
 import com.pricemonitor.service.ProductService;
 import com.pricemonitor.tools.JSONConverter;
+import com.pricemonitor.tools.XLSXFileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/product")
@@ -61,6 +68,24 @@ public class ProductController {
         productService.deleteProduct(product);
         return "success";
 
+    }
+
+    /*@PostMapping(path = "/upload")
+    public String uploadXSLXFile(//@RequestParam("name") String name,
+                                 @RequestParam("file")MultipartFile file) throws IOException {
+        String UPLOAD_DIR = "/home/mikhail/DEV/1/";*/
+    @GetMapping("/upload")
+    public String upload() throws IOException {
+/*
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
+        Files.write(path, bytes);*/
+
+        FileInputStream fileInputStream = new FileInputStream("/home/mikhail/DEV/loadBook.xlsx");
+        InputStream inputStream = new BufferedInputStream(fileInputStream);
+        XLSXFileReader reader = new XLSXFileReader(inputStream);
+        JSONConverter converter = new JSONConverter(reader.getProductListFromFile());
+        return converter.getJSON();
     }
 
 

@@ -13,6 +13,7 @@ repositories {
 def springCoreVersion = "5.3.7"
 def jacksonVersion = "2.12.2"
 def log4j = "1.7.28"
+def poi = "5.0.0"
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
@@ -40,6 +41,10 @@ dependencies {
     // Log system
     implementation 'org.slf4j:slf4j-api:'+log4j
     implementation 'org.slf4j:slf4j-log4j12:'+log4j
+    // XLSX Files Apache POI
+    implementation 'org.apache.poi:poi:'+poi
+    implementation 'org.apache.poi:poi-ooxml:'+poi
+
 }
 
 
