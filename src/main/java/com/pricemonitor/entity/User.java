@@ -24,7 +24,7 @@ public class User implements Serializable {
     private String email;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "USER_ROLES",
             joinColumns = @JoinColumn(name = "user_id"),

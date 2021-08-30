@@ -1,5 +1,6 @@
 package com.pricemonitor.controllers;
 
+import com.pricemonitor.dto.CategoryDTO;
 import com.pricemonitor.dto.ProductDTO;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Price;
@@ -30,6 +31,14 @@ public class ProductController {
     @GetMapping("/all")
     public String getAllProduct(){
         JSONConverter converter = new JSONConverter(productService.getAllProducts());
+        return converter.getJSON();
+    }
+
+    @PostMapping("/getProductByCategory")
+    public String getProductByCategoryName(@RequestBody CategoryDTO dto){
+        Category category = new Category();
+        category.setName(dto.getCategoryName());
+        JSONConverter converter = new JSONConverter(productService.findProductByCategory(category));
         return converter.getJSON();
     }
 

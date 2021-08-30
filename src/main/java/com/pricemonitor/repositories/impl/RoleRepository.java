@@ -1,52 +1,43 @@
 package com.pricemonitor.repositories.impl;
 
+import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
 import com.pricemonitor.hibernate.AbstractRepository;
-import com.pricemonitor.repositories.IUserRepository;
+import com.pricemonitor.repositories.IRoleRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.List;
+
 
 @Repository
-public class UserRepository extends AbstractRepository implements IUserRepository {
+public class RoleRepository extends AbstractRepository implements IRoleRepository {
 
-    public UserRepository() {
-        this.setClazz(User.class);
+    public RoleRepository() {
+        this.setClazz(Role.class);
     }
 
     @Transactional
     @Override
-    public void createUser(User user) {
-        this.create(user);
+    public void createNewRole(Role role) {
+        this.create(role);
     }
 
     @Transactional
     @Override
-    public void updateUser(User user) {
-        this.update(user);
-    }
-
-    @Override
-    public User findUserById(int id) {
-        return (User) this.findOneById(id);
-    }
-
-    @Override
-    public User findUserByName(String name) {
+    public Role findRoleByName(String roleName) {
         CriteriaBuilder criteriaBuilder = this.getEntityManager().getEntityManagerFactory().getCriteriaBuilder();
-        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-        Root<User> root = query.from(User.class);
+        CriteriaQuery<Role> query = criteriaBuilder.createQuery(Role.class);
+        Root<Role> root = query.from(Role.class);
         query.select(root);
-        query.where(criteriaBuilder.equal(root.get("login"), name));
+        query.where(criteriaBuilder.equal(root.get("role_name"), roleName));
         return this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getSingleResult();
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public java.util.List<Role> getAllRoles() {
         return this.findAll();
     }
 }
