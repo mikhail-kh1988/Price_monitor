@@ -7,4 +7,5 @@ public interface IDynamicPriceRepository extends CRUDRepository {
     void createDynamicPrice(DynamicPrice dynamicPrice);
     DynamicPrice findDynamicPriceById(int id);
     java.util.List<DynamicPrice> findAllDynamicPriceList();
+    void deleteDynamicPriceByProductId(int productId);
 }

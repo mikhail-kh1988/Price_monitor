@@ -19,7 +19,7 @@ public class Product implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "price_id", referencedColumnName = "id")
     private Price price;
 

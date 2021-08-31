@@ -1,4 +1,4 @@
-package com.pricemonitor.exceptions;
+package com.pricemonitor.exceptions.notfound;
 
 public class UserNotFoundException extends Exception{
     public UserNotFoundException(String message) {

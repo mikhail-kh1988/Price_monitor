@@ -62,11 +62,14 @@ public class MerchantService {
     }
 
     public java.util.List<Product> getAllProductByMerchant(Merchant merchant){
-        java.util.List<Product> productList = merchantRepository.findMerchantById(merchant.getId()).getProductList();
+        Merchant merchant1 = merchantRepository.findMerchantById(merchant.getId());
+        java.util.List<Product> productList = merchant1.getProductList();
         return productList;
     }
 
     public java.util.List<Category> getAllCategoryByMerchant(Merchant merchant){
-        return merchantRepository.findMerchantById(merchant.getId()).getCategoryList();
+        Merchant merchant1 = merchantRepository.findMerchantById(merchant.getId());
+        java.util.List<Category> categoryList = merchant1.getCategoryList();
+        return categoryList;
     }
 }

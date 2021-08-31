@@ -42,7 +42,7 @@ public class ProfileRepository extends AbstractRepository implements IProfileRep
         CriteriaQuery<Profile> query = criteriaBuilder.createQuery(Profile.class);
         Root<Profile> root = query.from(Profile.class);
         query.select(root);
-        query.where(criteriaBuilder.equal(root.get("user_id"), uid));
+        query.where(criteriaBuilder.equal(root.get("user"), uid));
         return this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getSingleResult();
     }
 

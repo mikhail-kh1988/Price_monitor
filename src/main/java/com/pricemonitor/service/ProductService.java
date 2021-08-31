@@ -6,6 +6,7 @@ import com.pricemonitor.repositories.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Transient;
 import java.util.Calendar;
 
 @Service
@@ -31,6 +32,7 @@ public class ProductService {
     }
 
     public void deleteProduct(Product product){
+        dynamicPriceService.deleteDynamicPriceById(product.getId());
         productRepository.removeProduct(product);
     }
 

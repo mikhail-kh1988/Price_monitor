@@ -31,4 +31,8 @@ public class DynamicPriceService {
         dynamicPrice.setCreateDate(Calendar.getInstance());
         dynamicPriceRepository.createDynamicPrice(dynamicPrice);
     }
+
+    public void deleteDynamicPriceById(int id){
+        dynamicPriceRepository.deleteDynamicPriceByProductId(id);
+    }
 }

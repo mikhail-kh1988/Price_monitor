@@ -41,51 +41,47 @@ public class MerchantController {
     }
 
     @PostMapping(path = "/productsByMerchant")
-    public String getProductByMerchant(@RequestBody MerchantDTO merchantDTO){
-        Merchant merchant = new Merchant();
-        merchant.setId(merchantDTO.getID());
-        merchant.setName(merchantDTO.getName());
+    public String getProductByMerchant(@RequestBody MerchantDTO dto){
+        Merchant merchant = merchantService.findMerchantById(dto.getID());
         java.util.List<Product> list = merchantService.getAllProductByMerchant(merchant);
         JSONConverter converter = new JSONConverter(list);
         return converter.getJSON();
     }
 
     @PostMapping(path = "/categoriesByMerchant")
-    public String getCategoryByMerchant(@RequestBody MerchantDTO merchantDTO){
-        Merchant merchant = new Merchant();
-        merchant.setName(merchantDTO.getName());
-        merchant.setId(merchantDTO.getID());
+    public String getCategoryByMerchant(@RequestBody MerchantDTO dto){
+        Merchant merchant = merchantService.findMerchantById(dto.getID());
         java.util.List<Category> list = merchantService.getAllCategoryByMerchant(merchant);
         JSONConverter converter = new JSONConverter(list);
         return converter.getJSON();
     }
 
     @PostMapping(path = "/addProduct")
-    public String addNewProduct(@RequestBody ProductForMerchantDTO productForMerchantDTO){
+    public String addNewProduct(@RequestBody ProductForMerchantDTO dto){
         Product product = new Product();
         Price price = new Price();
-        Category category = categoryService.findCategoryById(productForMerchantDTO.getCategoryID());
-        Merchant merchant = merchantService.findMerchantById(productForMerchantDTO.getMerchantID());
+        Category category = categoryService.findCategoryById(dto.getCategoryID());
+        Merchant merchant = merchantService.findMerchantById(dto.getMerchantID());
 
-        price.setMoney(productForMerchantDTO.getMonyName());
-        price.setTotal(productForMerchantDTO.getTotalSum());
+        price.setMoney(dto.getMonyName());
+        price.setTotal(dto.getTotalSum());
 
         product.setPrice(price);
         product.setCategory(category);
-        product.setName(productForMerchantDTO.getNameProduct());
-        product.setBoxing(productForMerchantDTO.getBoxing());
+        product.setName(dto.getNameProduct());
+        product.setBoxing(dto.getBoxing());
 
         merchantService.addNewProduct(merchant, product);
         return "success!";
     }
 
     @PostMapping(path = "/addCategory")
-    public String addNewCategory(@RequestBody CategoryForMerchantDTO categoryDTO){
+    public String addNewCategory(@RequestBody CategoryForMerchantDTO dto){
         Category category = new Category();
-        category.setName(categoryDTO.getCategoryName());
-        category.setDescription(categoryDTO.getCategoryDescription());
+        category.setName(dto.getCategoryName());
+        category.setDescription(dto.getCategoryDescription());
 
-        Merchant merchant = merchantService.findMerchantById(categoryDTO.getMerchantID());
+        Merchant merchant = merchantService.findMerchantById(dto.getMerchantID());
 
         merchantService.addNewCategory(merchant, category);
         return "success!";

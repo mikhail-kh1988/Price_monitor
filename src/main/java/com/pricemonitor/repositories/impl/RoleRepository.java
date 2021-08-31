@@ -32,7 +32,7 @@ public class RoleRepository extends AbstractRepository implements IRoleRepositor
         CriteriaQuery<Role> query = criteriaBuilder.createQuery(Role.class);
         Root<Role> root = query.from(Role.class);
         query.select(root);
-        query.where(criteriaBuilder.equal(root.get("role_name"), roleName));
+        query.where(criteriaBuilder.equal(root.get("name"), roleName));
         return this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getSingleResult();
     }
 

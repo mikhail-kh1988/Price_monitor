@@ -27,7 +27,7 @@ public class Merchant implements Serializable {
     private String address;
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "CATEGORY_MERCHANT",
@@ -37,7 +37,7 @@ public class Merchant implements Serializable {
     private java.util.List<Category> categoryList;
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "PRODUCT_MERCHANT",

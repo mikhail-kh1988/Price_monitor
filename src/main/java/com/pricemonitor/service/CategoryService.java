@@ -2,6 +2,7 @@ package com.pricemonitor.service;
 
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.repositories.ICategoryRepository;
+import com.pricemonitor.repositories.impl.CategoryRepository;
 import com.pricemonitor.tools.LoggerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class CategoryService {
 
     public Category findCategoryById(int id){
         return categoryRepository.findCategoryById(id);
+    }
+
+    public Category findCategoryByName(String categoryName){
+        return categoryRepository.findCategoryByName(categoryName);
     }
 
 }

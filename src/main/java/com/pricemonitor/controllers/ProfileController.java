@@ -4,13 +4,16 @@ import com.pricemonitor.dto.RegisterProfileDTO;
 import com.pricemonitor.dto.UserPasswordDTO;
 import com.pricemonitor.dto.UserRoleDTO;
 import com.pricemonitor.entity.Profile;
-import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
 import com.pricemonitor.service.ProfileService;
 import com.pricemonitor.service.UserService;
 import com.pricemonitor.tools.JSONConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+/**
+ *  This controller for work with Profile user
+ */
 
 @RestController
 @RequestMapping("/profiles")
@@ -29,11 +32,10 @@ public class ProfileController {
     }
 
     @PostMapping(path = "/register")
-    public String registerProfile(@RequestBody RegisterProfileDTO profileDTO){
-        profileService.createNewProfile(profileDTO.getFullName(), profileDTO.getLogin(),
-                profileDTO.getPassword(), profileDTO.getEmail());
-        int tempID = userService.findUserByLogin(profileDTO.getLogin()).getId();
-        return profileService.findProfileByUserId(tempID).toString();
+    public String registerProfile(@RequestBody RegisterProfileDTO dto){
+        profileService.createNewProfile(dto.getFullName(), dto.getLogin(), dto.getPassword(), dto.getEmail());
+        int tempID = userService.findUserByLogin(dto.getLogin()).getId();
+        return Integer.toString(profileService.findProfileByUserId(tempID).getId());
     }
 
     @PostMapping(path = "/updateProfile")
@@ -45,17 +47,17 @@ public class ProfileController {
     }
 
     @PostMapping(path = "/changepassword")
-    public String changeUserPassword(@RequestBody UserPasswordDTO userPasswordDTO){
-        User currentUser = userService.findUserByLogin(userPasswordDTO.getLogin());
-        currentUser.setPassword(userPasswordDTO.getPassword());
+    public String changeUserPassword(@RequestBody UserPasswordDTO dto){
+        User currentUser = userService.findUserByLogin(dto.getLogin());
+        currentUser.setPassword(dto.getPassword());
         userService.updateUser(currentUser);
         return "success!";
     }
 
     @PostMapping(path = "/addRole")
-    public String addRoleForUser(@RequestBody UserRoleDTO roleDTO){
-        userService.addUserRole(roleDTO.getLogin(), roleDTO.getRoleName());
-        User user = userService.findUserByLogin(roleDTO.getLogin());
+    public String addRoleForUser(@RequestBody UserRoleDTO dto){
+        userService.addUserRole(dto.getLogin(), dto.getRoleName());
+        User user = userService.findUserByLogin(dto.getLogin());
         JSONConverter converter = new JSONConverter(user.getRoles());
         return converter.getJSON();
     }

@@ -22,7 +22,7 @@ public class ProductRepository extends AbstractRepository implements IProductRep
     @Transactional
     @Override
     public void createProduct(Product product) {
-        this.create(product);
+        this.getEntityManager().merge(product);
 
     }
 
@@ -39,8 +39,8 @@ public class ProductRepository extends AbstractRepository implements IProductRep
         CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
         Root<Product> root = query.from(Product.class);
         query.select(root);
-        query.where(criteriaBuilder.equal(root.get("category_id"), category.getId()));
-        return (List<Product>) this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getSingleResult();
+        query.where(criteriaBuilder.equal(root.get("category"), category.getId()));
+        return this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getResultList();
     }
 
     @Transactional

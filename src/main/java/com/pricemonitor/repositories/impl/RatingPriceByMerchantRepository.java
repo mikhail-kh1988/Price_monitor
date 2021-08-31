@@ -42,8 +42,8 @@ public class RatingPriceByMerchantRepository extends AbstractRepository implemen
         CriteriaQuery<RatingPriceByMerchant> query = criteriaBuilder.createQuery(RatingPriceByMerchant.class);
         Root<RatingPriceByMerchant> root = query.from(RatingPriceByMerchant.class);
         query.select(root);
-        query.where(criteriaBuilder.between(root.get("merchant_id"), merchant1.getId(), merchant2.getId()));
-        query.orderBy(criteriaBuilder.desc(root.get("product_id")));
-        return (List<RatingPriceByMerchant>) this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getSingleResult();
+        query.where(criteriaBuilder.between(root.get("merchant"), merchant1.getId(), merchant2.getId()));
+        query.orderBy(criteriaBuilder.desc(root.get("product")));
+        return this.getEntityManager().getEntityManagerFactory().createEntityManager().createQuery(query).getResultList();
     }
 }

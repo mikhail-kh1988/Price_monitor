@@ -54,4 +54,15 @@ public class RatingPriceByMerchantService {
         return tempList;
     }
 
+    public java.util.List<RatingPriceByMerchant> findRatingByMerchant(Merchant merchant){
+        java.util.List<RatingPriceByMerchant> tempList = new ArrayList<>();
+        java.util.List<RatingPriceByMerchant> list = ratingPriceByMerchantRepository.findAllRatingPrice();
+        for (RatingPriceByMerchant rpm: list) {
+            if (rpm.getMerchant().equals(merchant)){
+                tempList.add(rpm);
+            }
+        }
+        return tempList;
+    }
+
 }
