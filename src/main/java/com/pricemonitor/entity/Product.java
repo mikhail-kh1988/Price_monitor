@@ -1,11 +1,14 @@
 package com.pricemonitor.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -19,9 +22,15 @@ public class Product implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "price_id", referencedColumnName = "id")
-    private Price price;
+    @JsonMerge //@JsonManagedReference //@BackReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(
+            name = "PRODUCT_PRICE",
+            joinColumns = @JoinColumn(name = "price_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private java.util.List<Price> priceList;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -46,12 +55,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Price getPrice() {
-        return price;
+    public List<Price> getPriceList() {
+        return priceList;
     }
 
-    public void setPrice(Price price) {
-        this.price = price;
+    public void setPriceList(List<Price> priceList) {
+        this.priceList = priceList;
     }
 
     public Category getCategory() {

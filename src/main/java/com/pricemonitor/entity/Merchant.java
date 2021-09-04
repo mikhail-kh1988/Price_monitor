@@ -27,7 +27,7 @@ public class Merchant implements Serializable {
     private String address;
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "CATEGORY_MERCHANT",
@@ -41,8 +41,8 @@ public class Merchant implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "PRODUCT_MERCHANT",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "merchant_id")
+            joinColumns = @JoinColumn(name = "merchant_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private java.util.List<Product> productList;
 
@@ -84,5 +84,9 @@ public class Merchant implements Serializable {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public void addCategory(Category category){
+        categoryList.add(category);
     }
 }

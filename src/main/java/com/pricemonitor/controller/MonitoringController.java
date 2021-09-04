@@ -1,9 +1,8 @@
-package com.pricemonitor.controllers;
+package com.pricemonitor.controller;
 
 import com.pricemonitor.dto.CategoryDTO;
 import com.pricemonitor.dto.MerchantDTO;
 import com.pricemonitor.dto.ProductDTO;
-import com.pricemonitor.dto.Rating2MerchantDTO;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.entity.Product;
@@ -17,12 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class MonitoringController {
 
     @Autowired
-    private DynamicPriceService dynamicPriceService;
-
-    @Autowired
-    private RatingPriceByMerchantService ratingPriceByMerchantService;
-
-    @Autowired
     private MerchantService merchantService;
 
     @Autowired
@@ -31,12 +24,7 @@ public class MonitoringController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/allDynamicPrice")
-    public String getAllDynamicPrice(){
-        JSONConverter converter = new JSONConverter(dynamicPriceService.getAllDynamicPrice());
-        return converter.getJSON();
-    }
-
+/*
     @PostMapping(path = "/getRating2Merchant")
     public String getRatingPriceBy2Merchant(@RequestBody Rating2MerchantDTO dto){
         Merchant merchant1 = merchantService.findMerchantById(dto.getMerchantID1());
@@ -70,6 +58,6 @@ public class MonitoringController {
     public String getAllRatingByMerchantList(){
         JSONConverter converter = new JSONConverter(ratingPriceByMerchantService.getAllRatingPriceByMerchantList());
         return converter.getJSON();
-    }
+    }*/
 
 }

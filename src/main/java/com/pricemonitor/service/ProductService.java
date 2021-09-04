@@ -1,7 +1,6 @@
 package com.pricemonitor.service;
 
 import com.pricemonitor.entity.*;
-import com.pricemonitor.repositories.IDynamicPriceRepository;
 import com.pricemonitor.repositories.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,24 +14,17 @@ public class ProductService {
     @Autowired
     private IProductRepository productRepository;
 
-    @Autowired
-    private DynamicPriceService dynamicPriceService;
 
     public void createProduct(Product product){
         productRepository.createProduct(product);
-        dynamicPriceService.createDynamicPrice(product);
     }
 
     public void updateProduct(Product product){
         Product current = productRepository.findProductById(product.getId());
-        if (current.getPrice().getTotal() != product.getPrice().getTotal()) {
-            dynamicPriceService.createDynamicPrice(product);
-        }
         productRepository.updateProduct(product);
     }
 
     public void deleteProduct(Product product){
-        dynamicPriceService.deleteDynamicPriceById(product.getId());
         productRepository.removeProduct(product);
     }
 

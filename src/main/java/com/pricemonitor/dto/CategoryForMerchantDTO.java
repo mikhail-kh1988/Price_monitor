@@ -2,12 +2,12 @@ package com.pricemonitor.dto;
 
 public class CategoryForMerchantDTO {
     private String categoryName;
-    private String CategoryDescription;
+    private String categoryDescription;
     private int merchantID;
 
     public CategoryForMerchantDTO(String categoryName, String categoryDescription, int merchantID) {
         this.categoryName = categoryName;
-        CategoryDescription = categoryDescription;
+        this.categoryDescription = categoryDescription;
         this.merchantID = merchantID;
     }
 
@@ -23,11 +23,11 @@ public class CategoryForMerchantDTO {
     }
 
     public String getCategoryDescription() {
-        return CategoryDescription;
+        return categoryDescription;
     }
 
     public void setCategoryDescription(String categoryDescription) {
-        CategoryDescription = categoryDescription;
+        this.categoryDescription = categoryDescription;
     }
 
     public int getMerchantID() {

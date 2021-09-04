@@ -4,6 +4,8 @@ public class CategoryDTO {
 
     private String categoryName;
     private String description;
+    private String newName;
+    private String newDescription;
 
     public CategoryDTO(String categoryName, String description) {
         this.categoryName = categoryName;
@@ -27,5 +29,21 @@ public class CategoryDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getNewName() {
+        return newName;
+    }
+
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+
+    public String getNewDescription() {
+        return newDescription;
+    }
+
+    public void setNewDescription(String newDescription) {
+        this.newDescription = newDescription;
     }
 }

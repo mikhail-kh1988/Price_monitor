@@ -1,4 +1,4 @@
-package com.pricemonitor.controllers;
+package com.pricemonitor.controller;
 
 import com.pricemonitor.dto.RegisterProfileDTO;
 import com.pricemonitor.dto.UserPasswordDTO;

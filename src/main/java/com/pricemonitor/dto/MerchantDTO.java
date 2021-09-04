@@ -4,6 +4,8 @@ public class MerchantDTO {
 
     private int ID;
     private String name;
+    private String newName;
+    private String newAddress;
 
     public MerchantDTO(int ID, String name) {
         this.ID = ID;
@@ -27,5 +29,21 @@ public class MerchantDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNewName() {
+        return newName;
+    }
+
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+
+    public String getNewAddress() {
+        return newAddress;
+    }
+
+    public void setNewAddress(String newAddress) {
+        this.newAddress = newAddress;
     }
 }

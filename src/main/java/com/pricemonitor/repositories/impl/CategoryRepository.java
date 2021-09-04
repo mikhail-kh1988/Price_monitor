@@ -19,10 +19,21 @@ public class CategoryRepository extends AbstractRepository implements ICategoryR
         this.setClazz(Category.class);
     }
 
-    @Override
     @Transactional
+    @Override
     public void createCategory(Category category) {
         this.create(category);
+    }
+
+    @Transactional
+    @Override
+    public void updateCategory(Category category) {
+        this.update(category);
+    }
+
+    @Override
+    public void deleteCategory(Category category) {
+        this.delete(category);
     }
 
     @Transactional

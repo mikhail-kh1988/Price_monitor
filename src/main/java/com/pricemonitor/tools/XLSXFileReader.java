@@ -68,7 +68,9 @@ public class XLSXFileReader {
             }
         }
         product.setCategory(category);
-        product.setPrice(price);
+        java.util.List<Price> priceList = new ArrayList<>();
+        priceList.add(price);
+        product.setPriceList(priceList);
         return product;
     }
 
