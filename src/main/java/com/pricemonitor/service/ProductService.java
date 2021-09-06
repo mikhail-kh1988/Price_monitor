@@ -20,7 +20,6 @@ public class ProductService {
     }
 
     public void updateProduct(Product product){
-        Product current = productRepository.findProductById(product.getId());
         productRepository.updateProduct(product);
     }
 
@@ -43,10 +42,5 @@ public class ProductService {
     public java.util.List<Product> findProductByBoxing(String boxing){
         return productRepository.findProductByBoxing(boxing);
     }
-
-    // Пока под вопросом.
-    /*public void addPriceForProductByMerchant(Price price, Product product, Merchant merchant, Calendar currentDate){
-
-    }*/
 
 }

@@ -45,7 +45,6 @@ public class MerchantService {
     }
 
     public void addNewProduct(Merchant merchant, Product product){
-        productRepository.createProduct(product);
         java.util.List<Product> productList = merchantRepository.findMerchantById(merchant.getId()).getProductList();
         productList.add(product);
         merchant.setProductList(productList);

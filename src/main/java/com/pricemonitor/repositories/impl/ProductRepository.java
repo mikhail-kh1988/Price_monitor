@@ -23,6 +23,7 @@ public class ProductRepository extends AbstractRepository implements IProductRep
     @Override
     public void createProduct(Product product) {
         this.getEntityManager().merge(product);
+        //this.create(product);
 
     }
 

@@ -22,13 +22,13 @@ public class Product implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @JsonMerge //@JsonManagedReference //@BackReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonMerge
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "PRODUCT_PRICE",
-            joinColumns = @JoinColumn(name = "price_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "price_id")
     )
     private java.util.List<Price> priceList;
 

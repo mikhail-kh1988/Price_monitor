@@ -37,7 +37,7 @@ public class Merchant implements Serializable {
     private java.util.List<Category> categoryList;
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})    //(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "PRODUCT_MERCHANT",

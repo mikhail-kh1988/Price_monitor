@@ -1,22 +1,17 @@
 package com.pricemonitor.controller;
 
-import com.pricemonitor.dto.CategoryDTO;
-import com.pricemonitor.dto.MerchantDTO;
-import com.pricemonitor.dto.ProductDTO;
-import com.pricemonitor.dto.ProductForMerchantDTO;
-import com.pricemonitor.entity.Category;
-import com.pricemonitor.entity.Merchant;
-import com.pricemonitor.entity.Price;
-import com.pricemonitor.entity.Product;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pricemonitor.dto.*;
+import com.pricemonitor.entity.*;
 import com.pricemonitor.service.CategoryService;
 import com.pricemonitor.service.MerchantService;
 import com.pricemonitor.service.ProductService;
 import com.pricemonitor.tools.JSONConverter;
-import com.pricemonitor.tools.XLSXFileReader;
+import com.pricemonitor.tools.JSONPackageLoadTemplate;
+import com.pricemonitor.tools.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.*;
 import java.util.ArrayList;
 
 @RestController
@@ -121,22 +116,71 @@ public class ProductController {
         return "success!";
     }
 
-/*    @PostMapping(path = "/upload", headers = "content-type=multipart/*")
-    public String uploadXSLXFile(@RequestParam MultipartFile file ) throws IOException {
-        String UPLOAD_DIR = "/home/mikhail/DEV/1/";*/
-    @GetMapping("/upload")
-    public String upload() throws IOException {
+    @PostMapping(path = "/linkedPriceProductWithMerchant")
+    public String linkedProductWithMerchant(@RequestBody PriceProductMerchantDTO dto){
+        Price price = new Price();
+        price.setMoney(dto.getMoney());
+        price.setTotal(dto.getTotalSum());
 
-        //file.transferTo(new File(UPLOAD_DIR+file.getOriginalFilename()));
+        Merchant merchant = merchantService.findMerchantById(dto.getMerchantId());
+        Product product = productService.findProductById(dto.getProductId());
 
+        product.getPriceList().add(price);
 
-        FileInputStream fileInputStream = new FileInputStream("/home/mikhail/DEV/loadBook.xlsx");
-        InputStream inputStream = new BufferedInputStream(fileInputStream);
-        XLSXFileReader reader = new XLSXFileReader(inputStream);
-        JSONConverter converter = new JSONConverter(reader.getProductListFromFile());
+        productService.updateProduct(product);
+
+        return "success!";
+    }
+
+    @PostMapping(path = "/getDynamicPrice")
+    public String getDynamicPrice(@RequestBody DynamicPriceDTO dto){
+        Product product = productService.findProductById(dto.getProductId());
+        java.util.List<Price> prices = product.getPriceList();
+        JSONConverter converter = new JSONConverter(prices);
         return converter.getJSON();
     }
 
+    @PostMapping(path = "/getPriceByPositions")
+    public String getPriceFrom2Merchant(@RequestBody CheckedPriceDTO dto){
+        java.util.List<Template> templateList = new ArrayList<>();
 
+        Merchant merchant1 = merchantService.findMerchantById(dto.getMerchantId1());
+        Merchant merchant2 = merchantService.findMerchantById(dto.getMerchantId2());
+        Product product = productService.findProductById(dto.getProductId());
+
+        java.util.List<Product> productListMerch1 = merchant1.getProductList();
+        for (Product p: productListMerch1) {
+            if (p.getName().equals(product.getName())){
+                Template template = new Template();
+                template.setMerchantName(merchant1.getName());
+                template.setProductName(p.getName());
+                template.setPriceList(p.getPriceList());
+                templateList.add(template);
+            }
+        }
+        java.util.List<Product> productListMerch2 = merchant2.getProductList();
+        for (Product p: productListMerch2) {
+            if (p.getName().equals(product.getName())){
+                Template template = new Template();
+                template.setMerchantName(merchant2.getName());
+                template.setProductName(p.getName());
+                template.setPriceList(p.getPriceList());
+                templateList.add(template);
+            }
+        }
+
+        JSONConverter converter = new JSONConverter(templateList);
+        return converter.getJSON();
+    }
+
+    @PostMapping(path = "/packageUpload")
+    public String upload(@RequestBody String loadJson) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JSONPackageLoadTemplate template = mapper.readValue(loadJson, JSONPackageLoadTemplate.class);
+        for (Product product:template.getList()) {
+            productService.createProduct(product);
+        }
+        return "success!";
+    }
 
 }
