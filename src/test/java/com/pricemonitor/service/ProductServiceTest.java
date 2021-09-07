@@ -2,6 +2,7 @@ package com.pricemonitor.service;
 
 import com.pricemonitor.ContextConfigurationTest;
 import com.pricemonitor.JPAConfigureTest;
+import com.pricemonitor.dto.ProductDTO;
 import com.pricemonitor.entity.Product;
 import com.pricemonitor.repositories.IProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,13 +49,17 @@ class ProductServiceTest {
 
     @Test
     void whenUpdateProduct() {
+        ProductDTO dto = new ProductDTO();
+        dto.setProductID(2);
+        dto.setName("test");
+
         Product product = productRepository.findProductById(2);
 
-        product.setName("test");
+        product.setName(dto.getName());
 
-        productService.updateProduct(product);
+        productService.updateProduct(dto);
 
-        verify(productService, times(1)).updateProduct(product);
+        verify(productService, times(1)).updateProduct(dto);
     }
 
     @Test

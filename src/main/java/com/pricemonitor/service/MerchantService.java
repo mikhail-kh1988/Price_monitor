@@ -1,5 +1,7 @@
 package com.pricemonitor.service;
 
+import com.pricemonitor.dto.MerchantDTO;
+import com.pricemonitor.dto.NewMerchantDTO;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.entity.Product;
@@ -24,15 +26,26 @@ public class MerchantService {
     private IProductRepository productRepository;
 
 
-    public void createNewMerchant(Merchant merchant){
+    public void createNewMerchant(NewMerchantDTO dto){
+        Merchant merchant = new Merchant();
+        merchant.setName(dto.getMerchantName());
+        merchant.setAddress(dto.getMerchantAddress());
         merchantRepository.createMerchant(merchant);
+    }
+
+    public void updateMerchant(MerchantDTO dto){
+        Merchant merchant = findMerchantById(dto.getID());
+        merchant.setName(dto.getNewName());
+        merchant.setAddress(dto.getNewAddress());
+        merchantRepository.updateMerchant(merchant);
     }
 
     public void updateMerchant(Merchant merchant){
         merchantRepository.updateMerchant(merchant);
     }
 
-    public void deleteMerchant(Merchant merchant){
+    public void deleteMerchant(MerchantDTO dto){
+        Merchant merchant = findMerchantById(dto.getID());
         merchantRepository.deleteMerchant(merchant);
     }
 

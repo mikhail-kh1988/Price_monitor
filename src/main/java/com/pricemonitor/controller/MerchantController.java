@@ -9,7 +9,10 @@ import com.pricemonitor.service.CategoryService;
 import com.pricemonitor.service.MerchantService;
 import com.pricemonitor.service.ProductService;
 import com.pricemonitor.tools.JSONConverter;
+import org.bouncycastle.asn1.cms.RsaKemParameters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,33 +25,26 @@ public class MerchantController {
     private MerchantService merchantService;
 
     @GetMapping("/all")
-    public String getAllMerchant(){
+    public ResponseEntity<String> getAllMerchant(){
         JSONConverter converter = new JSONConverter(merchantService.getAllMerchant());
-        return converter.getJSON();
+        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addMerchant")
-    public String crateNewMerchant(@RequestBody NewMerchantDTO dto){
-        Merchant merchant = new Merchant();
-        merchant.setName(dto.getMerchantName());
-        merchant.setAddress(dto.getMerchantAddress());
-        merchantService.createNewMerchant(merchant);
-        return "success!";
+    public ResponseEntity<String> crateNewMerchant(@RequestBody NewMerchantDTO dto){
+        merchantService.createNewMerchant(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/deleteMerchant")
-    public String deleteMerchant(@RequestBody MerchantDTO dto){
-        Merchant merchant = merchantService.findMerchantById(dto.getID());
-        merchantService.deleteMerchant(merchant);
-        return "success!";
+    public ResponseEntity<String> deleteMerchant(@RequestBody MerchantDTO dto){
+        merchantService.deleteMerchant(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/updateMerchant")
-    public String updateMerchant(@RequestBody MerchantDTO dto){
-        Merchant merchant = merchantService.findMerchantById(dto.getID());
-        merchant.setName(dto.getNewName());
-        merchant.setAddress(dto.getNewAddress());
-        merchantService.updateMerchant(merchant);
-        return "success!";
+    public ResponseEntity<String> updateMerchant(@RequestBody MerchantDTO dto){
+        merchantService.updateMerchant(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 }

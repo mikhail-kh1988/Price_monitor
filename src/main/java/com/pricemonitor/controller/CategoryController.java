@@ -13,6 +13,8 @@ import com.pricemonitor.tools.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,64 +30,47 @@ public class CategoryController {
     private MerchantService merchantService;
 
     @GetMapping("/all")
-    public String getAllCategories(){
+    public ResponseEntity<String> getAllCategories(){
         JSONConverter converter = new JSONConverter(categoryService.getAllCategories());
-        return converter.getJSON();
+        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addCategory")
-    public String addNewCategory(@RequestBody CategoryDTO dto){
-        Category category = new Category();
-        category.setName(dto.getCategoryName());
-        category.setDescription(dto.getDescription());
-        categoryService.createNewCategory(category);
+    public ResponseEntity<String> addNewCategory(@RequestBody CategoryDTO dto){
+        categoryService.createNewCategory(dto);
         logger.info("["+this.getClass().getCanonicalName()+"] Вызван контроллер создания категории.");
-        return "success!";
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/updateCategory")
-    public String updateCategory(@RequestBody CategoryDTO dto){
-        Category category = categoryService.findCategoryByName(dto.getCategoryName());
-        category.setName(dto.getNewName());
-        category.setDescription(dto.getNewDescription());
-        categoryService.updateCategory(category);
-        return "success!";
+    public ResponseEntity<String> updateCategory(@RequestBody CategoryDTO dto){
+        categoryService.updateCategory(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/deleteCategory")
-    public String deleteCategory(@RequestBody CategoryDTO dto){
-        Category category = categoryService.findCategoryByName(dto.getCategoryName());
-        categoryService.deleteCategory(category);
-        return "success!";
+    public ResponseEntity<String> deleteCategory(@RequestBody CategoryDTO dto){
+        categoryService.deleteCategory(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/addCategoryForMerchant")
-    public String addNewCategory(@RequestBody CategoryForMerchantDTO dto){
-        Category category = new Category();
-        category.setName(dto.getCategoryName());
-        category.setDescription(dto.getCategoryDescription());
-        //categoryService.createNewCategory(category);
-
-        Merchant merchant = merchantService.findMerchantById(dto.getMerchantID());
-
-        merchantService.addNewCategory(merchant, category);
-        return "success!";
+    public ResponseEntity<String> addNewCategory(@RequestBody CategoryForMerchantDTO dto){
+        categoryService.addNewCategoryForMerchant(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/linkedCategoryMerchant")
-    public String linkedCategory(@RequestBody CategoryLinkedDTO dto){
-        Merchant merchant = merchantService.findMerchantById(dto.getMerchantId());
-        Category category = categoryService.findCategoryById(dto.getCategoryId());
-        merchant.addCategory(category);
-        merchantService.updateMerchant(merchant);
-        return "success!";
+    public ResponseEntity<String> linkedCategory(@RequestBody CategoryLinkedDTO dto){
+        categoryService.linkedCategoryForMerchant(dto);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
     @PostMapping(path = "/categoriesByMerchant")
-    public String getCategoryByMerchant(@RequestBody MerchantDTO dto){
+    public ResponseEntity<String> getCategoryByMerchant(@RequestBody MerchantDTO dto){
         Merchant merchant = merchantService.findMerchantById(dto.getID());
         java.util.List<Category> list = merchantService.getAllCategoryByMerchant(merchant);
         JSONConverter converter = new JSONConverter(list);
-        return converter.getJSON();
+        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
     }
 }

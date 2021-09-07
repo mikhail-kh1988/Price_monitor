@@ -52,9 +52,9 @@ dependencies {
     implementation 'org.apache.poi:poi:'+poi
     implementation 'org.apache.poi:poi-ooxml:'+poi
     // Spring Security
-    //implementation 'org.springframework.security:spring-security-config:'+security
-    //implementation 'org.springframework.security:spring-security-web:'+security
-    //implementation 'org.springframework.security:spring-security-core:'+security
+    implementation 'org.springframework.security:spring-security-config:'+security
+    implementation 'org.springframework.security:spring-security-web:'+security
+    implementation 'org.springframework.security:spring-security-core:'+security
     // File Upload library
     implementation 'commons-fileupload:commons-fileupload:1.4'
 

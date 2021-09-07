@@ -2,6 +2,7 @@ package com.pricemonitor.service;
 
 import com.pricemonitor.ContextConfigurationTest;
 import com.pricemonitor.JPAConfigureTest;
+import com.pricemonitor.dto.ProfileDTO;
 import com.pricemonitor.entity.Profile;
 import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
@@ -64,12 +65,17 @@ class ProfileServiceTest {
 
     @Test
     void whenUpdateProfile() {
+        ProfileDTO dto = new ProfileDTO();
+        dto.setFullName("Abcdef Jhijk Lmnopq");
+        dto.setProfileId(1);
+
         Profile profile = profileRepository.findProfileById(1);
-        profile.setFullName("Abcdef Jhijk Lmnopq");
+        profile.setFullName(dto.getFullName());
 
-        profileService.updateProfile(profile);
 
-        verify(profileService, times(1)).updateProfile(profile);
+        profileService.updateProfile(dto);
+
+        verify(profileService, times(1)).updateProfile(dto);
 
         assertEquals("Abcdef Jhijk Lmnopq", profile.getFullName());
 

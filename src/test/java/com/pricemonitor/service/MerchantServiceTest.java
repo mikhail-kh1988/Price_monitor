@@ -2,6 +2,8 @@ package com.pricemonitor.service;
 
 import com.pricemonitor.ContextConfigurationTest;
 import com.pricemonitor.JPAConfigureTest;
+import com.pricemonitor.dto.MerchantDTO;
+import com.pricemonitor.dto.NewMerchantDTO;
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.repositories.IMerchantRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,14 +34,14 @@ class MerchantServiceTest {
 
     @Test
     void whenCreateNewMerchant() {
-        Merchant merchant = new Merchant();
-        merchant.setName("test");
+        NewMerchantDTO dto = new NewMerchantDTO();
+        dto.setMerchantName("test");
 
         int countMerchantBeforeInsert = merchantRepository.findAllMerchant().size();
 
-        merchantService.createNewMerchant(merchant);
+        merchantService.createNewMerchant(dto);
 
-        verify(merchantService, times(1)).createNewMerchant(merchant);
+        verify(merchantService, times(1)).createNewMerchant(dto);
 
         assertEquals(countMerchantBeforeInsert, merchantRepository.findAllMerchant().size());
     }
@@ -59,12 +61,14 @@ class MerchantServiceTest {
     @Test
     void whenDeleteMerchant() {
         Merchant merchant = merchantRepository.findMerchantById(2);
+        MerchantDTO dto = new MerchantDTO();
+        dto.setID(2);
 
         int countMerchantBeforeDelete = merchantRepository.findAllMerchant().size();
 
-        merchantService.deleteMerchant(merchant);
+        merchantService.deleteMerchant(dto);
 
-        verify(merchantService, times(1)).deleteMerchant(merchant);
+        verify(merchantService, times(1)).deleteMerchant(dto);
 
         assertEquals(countMerchantBeforeDelete, merchantRepository.findAllMerchant().size());
     }

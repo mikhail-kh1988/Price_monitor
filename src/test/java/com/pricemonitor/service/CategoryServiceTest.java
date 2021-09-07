@@ -2,6 +2,7 @@ package com.pricemonitor.service;
 
 import com.pricemonitor.ContextConfigurationTest;
 import com.pricemonitor.JPAConfigureTest;
+import com.pricemonitor.dto.CategoryDTO;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.repositories.ICategoryRepository;
 import com.pricemonitor.repositories.impl.CategoryRepository;
@@ -38,14 +39,13 @@ class CategoryServiceTest {
 
     @Test
     void whenAddInRepositoryNewCategory() {
-
-        Category category = new Category();
-        category.setName("from test category");
-        category.setDescription("test description");
+        CategoryDTO dto = new CategoryDTO();
+        dto.setCategoryName("from test category");
+        dto.setDescription("test description");
 
         int countCategoryBeforeInsert = categoryRepository.getAllCategory().size();
 
-        categoryService.createNewCategory(category);
+        categoryService.createNewCategory(dto);
 
         assertEquals(countCategoryBeforeInsert, categoryRepository.getAllCategory().size());
 

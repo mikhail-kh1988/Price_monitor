@@ -1,11 +1,15 @@
 package com.pricemonitor.service;
 
+import com.pricemonitor.dto.ProfileDTO;
+import com.pricemonitor.dto.UserPasswordDTO;
 import com.pricemonitor.entity.Profile;
 import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
 import com.pricemonitor.repositories.IProfileRepository;
 import com.pricemonitor.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,12 +21,18 @@ public class ProfileService {
     @Autowired
     private IProfileRepository profileRepository;
 
+    @Autowired
+    private UserService userService;
+
     public void createNewProfile(String fullName, String login, String password, String email){
         Profile profile = new Profile();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
 
         User user = new User();
         user.setLogin(login);
-        user.setPassword(password);
+        String passwd = encoder.encode(password);
+        user.setPassword(passwd);
         user.setEmail(email);
 
         profile.setFullName(fullName);
@@ -31,7 +41,12 @@ public class ProfileService {
         profileRepository.createProfile(profile);
     }
 
-    public void updateProfile(Profile profile){
+    public void updateProfile(ProfileDTO dto){
+        Profile profile = findProfileById(dto.getProfileId());
+        profile.setFullName(dto.getFullName());
+        profile.setAddress(dto.getAddress());
+        profile.setPhone(dto.getPhone());
+
         profileRepository.updateProfile(profile);
     }
 
@@ -56,5 +71,13 @@ public class ProfileService {
 
     public Profile findProfileByUserId(int id){
         return profileRepository.findProfileByUserId(id);
+    }
+
+    public void changeUserPassword(UserPasswordDTO dto){
+        User currentUser =  userService.findUserByLogin(dto.getLogin());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+        String passwd = encoder.encode(dto.getPassword());
+        currentUser.setPassword(passwd);
+        userService.updateUser(currentUser);
     }
 }
