@@ -1,9 +1,8 @@
-package com.pricemonitor.repositories.impl;
+package com.pricemonitor.repository.impl;
 
-import com.pricemonitor.entity.Product;
 import com.pricemonitor.entity.Profile;
 import com.pricemonitor.hibernate.AbstractRepository;
-import com.pricemonitor.repositories.IProfileRepository;
+import com.pricemonitor.repository.IProfileRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;

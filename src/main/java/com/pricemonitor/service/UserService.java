@@ -1,11 +1,9 @@
 package com.pricemonitor.service;
 
-import com.pricemonitor.entity.Profile;
 import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
-import com.pricemonitor.repositories.IProfileRepository;
-import com.pricemonitor.repositories.IRoleRepository;
-import com.pricemonitor.repositories.IUserRepository;
+import com.pricemonitor.repository.IRoleRepository;
+import com.pricemonitor.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

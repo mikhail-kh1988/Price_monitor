@@ -2,7 +2,7 @@ package com.pricemonitor.service;
 
 import com.pricemonitor.dto.*;
 import com.pricemonitor.entity.*;
-import com.pricemonitor.repositories.IProductRepository;
+import com.pricemonitor.repository.IProductRepository;
 import com.pricemonitor.tools.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

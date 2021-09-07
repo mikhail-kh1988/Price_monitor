@@ -3,7 +3,7 @@ package com.pricemonitor.service;
 import com.pricemonitor.ContextConfigurationTest;
 import com.pricemonitor.JPAConfigureTest;
 import com.pricemonitor.entity.User;
-import com.pricemonitor.repositories.IUserRepository;
+import com.pricemonitor.repository.IUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

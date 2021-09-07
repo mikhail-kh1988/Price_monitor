@@ -4,7 +4,7 @@ import com.pricemonitor.ContextConfigurationTest;
 import com.pricemonitor.JPAConfigureTest;
 import com.pricemonitor.dto.ProductDTO;
 import com.pricemonitor.entity.Product;
-import com.pricemonitor.repositories.IProductRepository;
+import com.pricemonitor.repository.IProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,12 +1,11 @@
-package com.pricemonitor.repositories.impl;
+package com.pricemonitor.repository.impl;
 
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.hibernate.AbstractRepository;
-import com.pricemonitor.repositories.IMerchantRepository;
+import com.pricemonitor.repository.IMerchantRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Repository
 public class MerchantRepository extends AbstractRepository implements IMerchantRepository {

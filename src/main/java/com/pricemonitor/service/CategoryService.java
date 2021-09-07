@@ -5,13 +5,10 @@ import com.pricemonitor.dto.CategoryForMerchantDTO;
 import com.pricemonitor.dto.CategoryLinkedDTO;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Merchant;
-import com.pricemonitor.repositories.ICategoryRepository;
-import com.pricemonitor.repositories.impl.CategoryRepository;
+import com.pricemonitor.repository.ICategoryRepository;
 import com.pricemonitor.tools.LoggerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class CategoryService {

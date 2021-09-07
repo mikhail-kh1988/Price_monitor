@@ -5,7 +5,7 @@ import com.pricemonitor.JPAConfigureTest;
 import com.pricemonitor.dto.MerchantDTO;
 import com.pricemonitor.dto.NewMerchantDTO;
 import com.pricemonitor.entity.Merchant;
-import com.pricemonitor.repositories.IMerchantRepository;
+import com.pricemonitor.repository.IMerchantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

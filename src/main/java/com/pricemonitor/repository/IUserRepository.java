@@ -1,4 +1,4 @@
-package com.pricemonitor.repositories;
+package com.pricemonitor.repository;
 
 import com.pricemonitor.entity.User;
 import com.pricemonitor.hibernate.CRUDRepository;

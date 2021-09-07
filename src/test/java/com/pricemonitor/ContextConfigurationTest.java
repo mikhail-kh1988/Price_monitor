@@ -1,7 +1,7 @@
 package com.pricemonitor;
 
-import com.pricemonitor.repositories.*;
-import com.pricemonitor.repositories.impl.*;
+import com.pricemonitor.repository.*;
+import com.pricemonitor.repository.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

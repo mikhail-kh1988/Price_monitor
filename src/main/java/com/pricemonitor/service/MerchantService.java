@@ -5,13 +5,11 @@ import com.pricemonitor.dto.NewMerchantDTO;
 import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.entity.Product;
-import com.pricemonitor.repositories.ICategoryRepository;
-import com.pricemonitor.repositories.IMerchantRepository;
-import com.pricemonitor.repositories.IProductRepository;
+import com.pricemonitor.repository.ICategoryRepository;
+import com.pricemonitor.repository.IMerchantRepository;
+import com.pricemonitor.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class MerchantService {

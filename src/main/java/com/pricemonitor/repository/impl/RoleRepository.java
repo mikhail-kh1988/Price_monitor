@@ -1,9 +1,8 @@
-package com.pricemonitor.repositories.impl;
+package com.pricemonitor.repository.impl;
 
 import com.pricemonitor.entity.Role;
-import com.pricemonitor.entity.User;
 import com.pricemonitor.hibernate.AbstractRepository;
-import com.pricemonitor.repositories.IRoleRepository;
+import com.pricemonitor.repository.IRoleRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;

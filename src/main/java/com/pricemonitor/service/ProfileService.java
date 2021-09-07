@@ -5,10 +5,9 @@ import com.pricemonitor.dto.UserPasswordDTO;
 import com.pricemonitor.entity.Profile;
 import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
-import com.pricemonitor.repositories.IProfileRepository;
-import com.pricemonitor.repositories.IUserRepository;
+import com.pricemonitor.repository.IProfileRepository;
+import com.pricemonitor.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

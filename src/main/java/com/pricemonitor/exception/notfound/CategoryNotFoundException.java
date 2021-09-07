@@ -1,4 +1,4 @@
-package com.pricemonitor.exceptions.notfound;
+package com.pricemonitor.exception.notfound;
 
 public class CategoryNotFoundException extends Exception{
     public CategoryNotFoundException(String message) {
