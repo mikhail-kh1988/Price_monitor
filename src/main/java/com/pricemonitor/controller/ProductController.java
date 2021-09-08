@@ -7,7 +7,6 @@ import com.pricemonitor.entity.*;
 import com.pricemonitor.service.CategoryService;
 import com.pricemonitor.service.MerchantService;
 import com.pricemonitor.service.ProductService;
-import com.pricemonitor.tools.JSONConverter;
 import com.pricemonitor.tools.JSONPackageLoadTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,15 +27,15 @@ public class ProductController {
     private MerchantService merchantService;
 
     @GetMapping("/all")
-    public ResponseEntity<String> getAllProduct(){
-        JSONConverter converter = new JSONConverter(productService.getAllProducts());
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+    public ResponseEntity<String> getAllProduct() throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(productService.getAllProducts()), HttpStatus.OK);
     }
 
     @PostMapping("/getProductByCategory")
-    public ResponseEntity<String> getProductByCategoryName(@RequestBody CategoryDTO dto){
-        JSONConverter converter = new JSONConverter(productService.findProductByCategory(dto));
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+    public ResponseEntity<String> getProductByCategoryName(@RequestBody CategoryDTO dto) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(productService.findProductByCategory(dto)), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addProduct")
@@ -60,11 +59,11 @@ public class ProductController {
     }
 
     @PostMapping(path = "/productsByMerchant")
-    public ResponseEntity<String> getProductByMerchant(@RequestBody MerchantDTO dto){
+    public ResponseEntity<String> getProductByMerchant(@RequestBody MerchantDTO dto) throws JsonProcessingException{
         Merchant merchant = merchantService.findMerchantById(dto.getID());
         java.util.List<Product> list = merchantService.getAllProductByMerchant(merchant);
-        JSONConverter converter = new JSONConverter(list);
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(list), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addProductForMerchant")
@@ -80,17 +79,17 @@ public class ProductController {
     }
 
     @PostMapping(path = "/getDynamicPrice")
-    public ResponseEntity<String> getDynamicPrice(@RequestBody DynamicPriceDTO dto){
+    public ResponseEntity<String> getDynamicPrice(@RequestBody DynamicPriceDTO dto) throws JsonProcessingException{
         Product product = productService.findProductById(dto.getProductId());
         java.util.List<Price> prices = product.getPriceList();
-        JSONConverter converter = new JSONConverter(prices);
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(prices), HttpStatus.OK);
     }
 
     @PostMapping(path = "/getPriceByPositions")
-    public ResponseEntity<String> getPriceFrom2Merchant(@RequestBody CheckedPriceDTO dto){
-        JSONConverter converter = new JSONConverter(productService.getPriceFrom2Merchant(dto));
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+    public ResponseEntity<String> getPriceFrom2Merchant(@RequestBody CheckedPriceDTO dto) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(productService.getPriceFrom2Merchant(dto)), HttpStatus.OK);
     }
 
     @PostMapping(path = "/packageUpload")

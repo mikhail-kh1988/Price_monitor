@@ -7,12 +7,16 @@ import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
 import com.pricemonitor.repository.IProfileRepository;
 import com.pricemonitor.repository.IUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProfileService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IUserRepository userRepository;
@@ -38,6 +42,7 @@ public class ProfileService {
         profile.setUser(user);
 
         profileRepository.createProfile(profile);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод создания профиля по коротким данным. ");
     }
 
     public void updateProfile(ProfileDTO dto){
@@ -47,6 +52,7 @@ public class ProfileService {
         profile.setPhone(dto.getPhone());
 
         profileRepository.updateProfile(profile);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод обновления профиля. ");
     }
 
     public void addRoleForUser(Profile profile, Role role){
@@ -58,17 +64,21 @@ public class ProfileService {
         user.setRoles(roles);
 
         userRepository.updateUser(user);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод добавления новой роли "+role.getName()+" пользователю "+profile.getUser().getLogin()+" .");
     }
 
     public java.util.List<Profile> getAllProfiles(){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод выведения списка всех профилей.");
         return profileRepository.getAllProfiles();
     }
 
     public Profile findProfileById(int id){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод поиска профиля по ID "+id);
         return profileRepository.findProfileById(id);
     }
 
     public Profile findProfileByUserId(int id){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод поиска профиля по user_id "+id);
         return profileRepository.findProfileByUserId(id);
     }
 
@@ -78,5 +88,6 @@ public class ProfileService {
         String passwd = encoder.encode(dto.getPassword());
         currentUser.setPassword(passwd);
         userService.updateUser(currentUser);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод изменения пароля пользователя.");
     }
 }

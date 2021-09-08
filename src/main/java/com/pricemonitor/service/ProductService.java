@@ -4,12 +4,16 @@ import com.pricemonitor.dto.*;
 import com.pricemonitor.entity.*;
 import com.pricemonitor.repository.IProductRepository;
 import com.pricemonitor.tools.Template;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
 public class ProductService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IProductRepository productRepository;
@@ -37,10 +41,12 @@ public class ProductService {
         product.setBoxing(dto.getBoxing());
 
         productRepository.createProduct(product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод создания продукта "+product.getName());
     }
 
     public void createProduct(Product product){
         productRepository.createProduct(product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод создания продукта "+product.getName());
     }
 
     public void createProductForMerchant(ProductForMerchantDTO dto){
@@ -60,6 +66,7 @@ public class ProductService {
         product.setBoxing(dto.getBoxing());
 
         merchantService.addNewProduct(merchant, product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод создания продукта "+product.getName()+" для магазина "+merchant.getName());
     }
 
     public void updateProduct(ProductDTO dto){
@@ -76,26 +83,32 @@ public class ProductService {
         priceList.add(price);
         product.setPriceList(priceList);
         productRepository.updateProduct(product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод обновления продукта.");
     }
 
     public void updateProduct(Product product){
         productRepository.updateProduct(product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод обновления продукта. ");
     }
 
     public void deleteProduct(Product product){
         productRepository.removeProduct(product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод удаления продукта. ");
     }
 
     public Product findProductById(int id){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод поиска продукта по ID = "+id);
         return productRepository.findProductById(id);
     }
 
     public java.util.List<Product> getAllProducts(){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод вывода списка всех продуктов.");
         return productRepository.findAllProduct();
     }
 
     public java.util.List<Product> findProductByCategory(CategoryDTO dto){
         Category category = categoryService.findCategoryByName(dto.getCategoryName());
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод поиска списка всех продуктов по определенной категории "+category.getName());
         return productRepository.findProductByCategory(category);
     }
 
@@ -114,6 +127,7 @@ public class ProductService {
         product.getPriceList().add(price);
 
         updateProduct(product);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод связывания проукта к конкретному магазину. ");
     }
 
     public java.util.List<Template> getPriceFrom2Merchant(CheckedPriceDTO dto){
@@ -144,6 +158,7 @@ public class ProductService {
             }
         }
 
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод получения цены по двум магазмнам");
         return templateList;
     }
 

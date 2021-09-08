@@ -1,15 +1,9 @@
 package com.pricemonitor.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pricemonitor.dto.*;
-import com.pricemonitor.entity.Category;
-import com.pricemonitor.entity.Merchant;
-import com.pricemonitor.entity.Price;
-import com.pricemonitor.entity.Product;
-import com.pricemonitor.service.CategoryService;
 import com.pricemonitor.service.MerchantService;
-import com.pricemonitor.service.ProductService;
-import com.pricemonitor.tools.JSONConverter;
-import org.bouncycastle.asn1.cms.RsaKemParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +19,9 @@ public class MerchantController {
     private MerchantService merchantService;
 
     @GetMapping("/all")
-    public ResponseEntity<String> getAllMerchant(){
-        JSONConverter converter = new JSONConverter(merchantService.getAllMerchant());
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+    public ResponseEntity<String> getAllMerchant() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(merchantService.getAllMerchant()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addMerchant")

@@ -4,6 +4,8 @@ import com.pricemonitor.entity.Role;
 import com.pricemonitor.entity.User;
 import com.pricemonitor.repository.IRoleRepository;
 import com.pricemonitor.repository.IUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private IUserRepository userRepository;
 
@@ -27,13 +31,16 @@ public class UserService implements UserDetailsService {
 
     public void createNewUser(User user){
         userRepository.createUser(user);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод созадния пользователя. ");
     }
 
     public void updateUser(User user){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод обновления пользователя. ");
         userRepository.updateUser(user);
     }
 
     public User findUserByLogin(String login){
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод поиска пользователя по login-у: "+login );
         return userRepository.findUserByName(login);
     }
 
@@ -46,6 +53,7 @@ public class UserService implements UserDetailsService {
 
         tempUser.setRoles(roleList);
         userRepository.updateUser(tempUser);
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод добавления пользователю роли "+role1.getName());
     }
 
     @Override
@@ -55,7 +63,7 @@ public class UserService implements UserDetailsService {
         if (user == null){
             throw new UsernameNotFoundException("User not found!");
         }
-
+        logger.info("["+this.getClass().getCanonicalName()+"] Вызван метод поиска пользоватея по username: "+username);
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 

@@ -1,5 +1,7 @@
 package com.pricemonitor.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pricemonitor.dto.CategoryDTO;
 import com.pricemonitor.dto.CategoryForMerchantDTO;
 import com.pricemonitor.dto.CategoryLinkedDTO;
@@ -8,10 +10,6 @@ import com.pricemonitor.entity.Category;
 import com.pricemonitor.entity.Merchant;
 import com.pricemonitor.service.CategoryService;
 import com.pricemonitor.service.MerchantService;
-import com.pricemonitor.tools.JSONConverter;
-import com.pricemonitor.tools.LoggerInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/category")
 public class CategoryController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private CategoryService categoryService;
@@ -30,15 +27,14 @@ public class CategoryController {
     private MerchantService merchantService;
 
     @GetMapping("/all")
-    public ResponseEntity<String> getAllCategories(){
-        JSONConverter converter = new JSONConverter(categoryService.getAllCategories());
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+    public ResponseEntity<String> getAllCategories() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(categoryService.getAllCategories()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addCategory")
     public ResponseEntity<String> addNewCategory(@RequestBody CategoryDTO dto){
         categoryService.createNewCategory(dto);
-        logger.info("["+this.getClass().getCanonicalName()+"] Вызван контроллер создания категории.");
         return new ResponseEntity<>("success!", HttpStatus.OK);
     }
 
@@ -67,10 +63,10 @@ public class CategoryController {
     }
 
     @PostMapping(path = "/categoriesByMerchant")
-    public ResponseEntity<String> getCategoryByMerchant(@RequestBody MerchantDTO dto){
+    public ResponseEntity<String> getCategoryByMerchant(@RequestBody MerchantDTO dto) throws JsonProcessingException{
         Merchant merchant = merchantService.findMerchantById(dto.getID());
         java.util.List<Category> list = merchantService.getAllCategoryByMerchant(merchant);
-        JSONConverter converter = new JSONConverter(list);
-        return new ResponseEntity<>(converter.getJSON(), HttpStatus.OK);
+        ObjectMapper mapper = new ObjectMapper();
+        return new ResponseEntity<>(mapper.writeValueAsString(list), HttpStatus.OK);
     }
 }
